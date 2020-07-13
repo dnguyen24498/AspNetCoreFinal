@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -14,35 +16,35 @@ namespace WebApi.Controllers
             _repository = repository;
         }
 
+     
         [HttpGet("{id}")]
         public IActionResult GetCategoryId(int id)
         {
-            return Ok(_repository.GetCategoryById(id));
+            return Ok();
         } 
         [HttpGet]
-        public IActionResult GetAllCategory()
+        public async Task<IActionResult> GetAllCategory()
         {
-            return Ok(_repository.GetCategories());
+            return Ok(await _repository.GetAllCategory());
         }
 
         [HttpPost]
-        public IActionResult CreateCategory(Category createRequest)
+        [Authorize(Policy="admin")]
+        public IActionResult CreateCategory()
         {
-            _repository.AddCategory(createRequest);
             return RedirectToAction(nameof(GetAllCategory));
         }
      
         [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)
         {
-            _repository.DeleteCategory(id);
+
             return RedirectToAction(nameof(GetAllCategory));
         }
 
         [HttpPut]
-        public IActionResult UpdateCategory(Category update)
+        public IActionResult UpdateCategory()
         {
-            _repository.UpdateCategory(update);
             return RedirectToAction(nameof(GetAllCategory));
         }
 

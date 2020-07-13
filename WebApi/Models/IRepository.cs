@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Models.Entities;
 
 namespace WebApi.Models
 {
     public interface IRepository
     {
-        List<Category> GetCategories();
-        Category GetCategoryById(int id);
-        void AddCategory(Category category);
-        void DeleteCategory(int id);
-        void UpdateCategory(Category update);
+        Task<List<Category>> GetAllCategory();
+        Task<Category> GetCategoryById(Guid id);
+
+        Task<List<Product>> GetAllProductByCategoryId(Guid id);
+        Task<List<Product>> GetAllProduct();
+
     }
 }
