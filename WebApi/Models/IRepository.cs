@@ -10,6 +10,10 @@ namespace WebApi.Models
     {
         Task<List<Category>> GetAllCategory();
         Task<Category> GetCategoryById(Guid id);
+        Task AddCategory(Category category);
+        Task DeleteCategory(Guid categoryId);
+
+
 
         Task<List<Product>> GetAllProductByCategoryId(Guid id);
         Task<List<Product>> GetAllProduct();

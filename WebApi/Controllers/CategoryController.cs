@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using WebApi.Models;
+using WebApi.Models.Entities;
 
 namespace WebApi.Controllers
 {
@@ -29,16 +31,16 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy="admin")]
-        public IActionResult CreateCategory()
+        public async Task<IActionResult> CreateCategory(Category category)
         {
+            await _repository.AddCategory(category);
             return RedirectToAction(nameof(GetAllCategory));
         }
      
         [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(Guid id)
         {
-
+            await _repository.DeleteCategory(id);
             return RedirectToAction(nameof(GetAllCategory));
         }
 
